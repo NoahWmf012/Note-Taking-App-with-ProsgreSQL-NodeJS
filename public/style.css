@@ -1,0 +1,16 @@
+body {
+  background-image: url("./bg.jpg");
+  background-color: aqua;
+}
+
+.input-field {
+  display: block;
+  margin: 0 auto;
+  width: 380px;
+}
+
+.notes {
+  display: block;
+  margin: 0 auto;
+  width: 380px;
+}
