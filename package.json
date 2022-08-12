@@ -1,0 +1,19 @@
+{
+  "dependencies": {
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "express-basic-auth": "^1.2.1",
+    "express-handlebars": "^6.0.6",
+    "knex": "^2.2.0",
+    "pg": "^8.7.3"
+  },
+  "name": "note-taking-application-db",
+  "version": "1.0.0",
+  "main": "Authorization.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}

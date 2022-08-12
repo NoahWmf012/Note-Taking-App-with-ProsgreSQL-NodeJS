@@ -14,25 +14,25 @@ class TodoRouter {
   }
 
   async getAll(req, res) {
-    let _note = await this.note.showAll(req.auth.user);
+    let _note = await this.note.read(req.auth.user);
     res.json(_note);
   }
 
   async post(req, res) {
     await this.note.add(req.body.note, req.auth.user);
-    let _note = await this.note.showAll(req.auth.user);
+    let _note = await this.note.read(req.auth.user);
     res.json(_note);
   }
 
   async put(req, res) {
     await this.note.update(req.params.id, req.body.note, req.auth.user);
-    let _note = await this.note.showAll(req.auth.user);
+    let _note = await this.note.read(req.auth.user);
     res.json(_note);
   }
 
   async delete(req, res) {
-    await this.note.remove(req.params.id, req.auth.user);
-    let _note = await this.note.showAll(req.auth.user);
+    await this.note.remove(req.params.id);
+    let _note = await this.note.read(req.auth.user);
     res.json(_note);
   }
 }

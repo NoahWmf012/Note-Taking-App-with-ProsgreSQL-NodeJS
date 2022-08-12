@@ -1,80 +1,44 @@
 const { resolve } = require("path");
 
 class NoteServer {
-  constructor(file, fs) {
-    this.file = file;
-    this.fs = fs;
-    this.note = {};
-    this.init();
+  constructor(knex) {
+    this.knex = knex;
   }
 
-  init() {
-    new Promise((resolve, reject) => {
-      this.read().then((data) => {
-        this.note = data;
-      });
-    });
-  }
-
-  read() {
-    return new Promise((resolve, reject) => {
-      this.fs.readFile(this.file, "utf-8", (err, data) => {
-        if (err) {
-          reject(err);
-        }
-        resolve(JSON.parse(data));
-      });
-    });
-  }
-
-  write() {
-    return new Promise((resolve, reject) => {
-      this.fs.writeFile(this.file, JSON.stringify(this.note), (err) => {
-        if (err) {
-          reject(err);
-        }
-        resolve();
-      });
-    });
-  }
-
-  showAll(user) {
-    return this.read().then(() => {
-      if (this.note[user] === undefined) {
-        return [];
-      }
-      return this.note[user];
-    });
+  read(user) {
+    return this.knex("users")
+      .select("notes.content", "notes.id")
+      .join("notes", "users.id", "notes.user_id")
+      .where("username", user);
   }
 
   add(content, user) {
-    if (this.note[user] === undefined) {
-      this.note[user] = [];
-    }
-    this.note[user].push(content);
-    return this.write();
+    return this.knex("users")
+      .select("id")
+      .where("username", user)
+      .first()
+      .then((data) => {
+        return this.knex("notes").insert({
+          user_id: data.id,
+          content: content,
+        });
+      });
   }
 
   update(index, content, user) {
-    if (this.note[user] === undefined) {
-      throw new Error("The user doesn't exist.");
-    }
-    if (this.note[user].length <= index) {
-      throw new Error("Cannot find the note.");
-    }
-    this.note[user][index] = content;
-    return this.write();
+    return this.knex("users")
+      .select("id")
+      .where("username", user)
+      .first()
+      .then(() => {
+        return this.knex("notes").where("id", index).update({
+          content: content,
+        });
+      });
   }
 
-  remove(index, user) {
-    if (this.note[user] === undefined) {
-      throw new Error("The user doesn't exist.");
-    }
-    if (this.note[user].length <= index) {
-      throw new Error("Cannot find the note.");
-    }
-    this.note[user].splice(index, 1);
-    return this.write();
+  remove(index) {
+    return this.knex("notes").where("id", index).del();
   }
 }
 
