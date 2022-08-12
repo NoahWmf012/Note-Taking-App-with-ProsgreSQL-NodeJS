@@ -47,7 +47,7 @@ function reloadNotes(noteData) {
   console.log("parsed : ", parsed);
   $("#notes").html(
     noteTemplate({
-      parsed,
+      notes: parsed,
     })
   );
 }
