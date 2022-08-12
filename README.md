@@ -6,9 +6,9 @@
 - run: `npm install express express-handlebars express-basic-auth pg knex dotenv`
 - open your Postgres psql
 - set up .env file with 3 variables:
-  DB_NAME=
-  DB_USERNAME=
-  DB_PASSWORD=
+  `DB_NAME`
+  `DB_USERNAME`
+  `DB_PASSWORD`
 
 ### How To Run This APP
 
