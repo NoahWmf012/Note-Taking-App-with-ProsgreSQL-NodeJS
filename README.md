@@ -4,7 +4,7 @@ This application use: BasicAuth for authentication, handlebars for rendering, kn
 ### How To Start This APP
 
 - run: `cd Note-Taking-Application-DB`
-- run: `npm install express express-handlebars express-basic-auth pg knex dotenv`
+- run: `npm install`
 - open your Postgres psql
 - open a new `.env` file with 3 variables:
   `DB_NAME`
